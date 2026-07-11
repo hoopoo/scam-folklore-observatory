@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  /* Laboratory palette: quiet, paper-white base with restrained ink. */
+  --paper: #f6f5f2;
+  --paper-raised: #fbfaf8;
+  --ink: #232220;
+  --ink-muted: #57544e;
+  --ink-faint: #8b877e;
+  --border: #dcd8ce;
+  --border-subtle: #e9e5db;
+
+  /* Restrained accents. Muted amber / dusty red, never neon. */
+  --accent-amber: #9a6a12;
+  --accent-red: #9a3b32;
+  --accent-soft: #efece4;
+
+  /* Risk level tints (soft, observational, not alarmist). */
+  --risk-low: #6b7280;
+  --risk-low-bg: #f1f1ef;
+  --risk-medium: #92700f;
+  --risk-medium-bg: #f6efd9;
+  --risk-high: #a1541b;
+  --risk-high-bg: #f6e7d6;
+  --risk-critical: #98362d;
+  --risk-critical-bg: #f4dcd7;
+}
+
+@theme inline {
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Uppercase metadata labels, common in field notes. */
+.annotation {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+.prose-ja {
+  line-height: 2;
+  letter-spacing: 0.01em;
+}
+
+/* Fine grid backdrop used sparingly to suggest an observation surface. */
+.grid-surface {
+  background-image:
+    linear-gradient(to right, rgba(35, 34, 32, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(35, 34, 32, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
