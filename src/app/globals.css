@@ -24,6 +24,14 @@
   --risk-high-bg: #f6e7d6;
   --risk-critical: #98362d;
   --risk-critical-bg: #f4dcd7;
+
+  /* Intimacy Observatory accents — muted violet, slate, deep green */
+  --accent-violet: #5c4f6e;
+  --accent-violet-bg: #edeaf1;
+  --accent-slate: #4a5f6a;
+  --accent-slate-bg: #e8ecee;
+  --accent-green: #3d5c4a;
+  --accent-green-bg: #e6eee9;
 }
 
 @theme inline {
@@ -64,4 +72,15 @@ body {
     linear-gradient(to right, rgba(35, 34, 32, 0.035) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(35, 34, 32, 0.035) 1px, transparent 1px);
   background-size: 28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
