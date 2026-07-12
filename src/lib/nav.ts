@@ -1,36 +1,39 @@
-import { RELATED_PROJECTS } from "@/config/projects";
+import { isSubmitEnabled } from "@/lib/features";
 
 export type NavItem = {
   href: string;
   label: string;
-  external?: boolean;
 };
 
 const HEADER_NAV: NavItem[] = [
-  { href: "/observations", label: "Observations" },
-  { href: "/articles", label: "Articles" },
-  { href: "/questions", label: "Questions" },
-  { href: "/#relationship-map", label: "Relationship Map" },
-  { href: "/#machine-model", label: "Machine's Model" },
+  { href: "/", label: "Home" },
+  { href: "/patterns", label: "Patterns" },
+  { href: "/reports", label: "Reports" },
+  { href: "/forecasts", label: "Forecasts" },
+  { href: "/trust-hooks", label: "Trust Hooks" },
+  { href: "/taxonomy", label: "Taxonomy" },
+  { href: "/submit", label: "Submit" },
   { href: "/about", label: "About" },
 ];
 
 const FOOTER_NAV: NavItem[] = [
-  { href: "/articles", label: "Articles" },
-  { href: "/about", label: "About" },
-  { href: "/related-projects", label: "Related Projects" },
-  { href: "/privacy", label: "Privacy" },
-  { href: "/sources", label: "Sources" },
+  { href: "/patterns", label: "観測一覧" },
+  { href: "/reports", label: "トレンドレポート" },
+  { href: "/forecasts", label: "未来詐欺予測" },
+  { href: "/trust-hooks", label: "信頼フック辞書" },
+  { href: "/taxonomy", label: "分類辞書" },
+  { href: "/submit", label: "観測を追加" },
+  { href: "/about", label: "この観測所について" },
 ];
 
 export function getHeaderNav(): NavItem[] {
-  return HEADER_NAV;
+  return HEADER_NAV.filter(
+    (item) => item.href !== "/submit" || isSubmitEnabled(),
+  );
 }
 
 export function getFooterNav(): NavItem[] {
-  return FOOTER_NAV;
-}
-
-export function getRelatedProjectLinks() {
-  return RELATED_PROJECTS;
+  return FOOTER_NAV.filter(
+    (item) => item.href !== "/submit" || isSubmitEnabled(),
+  );
 }
