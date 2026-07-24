@@ -2,9 +2,13 @@ import Link from "next/link";
 import { ArrowRight, Eye, FlaskConical } from "lucide-react";
 import { getSeedPatternById, getSeedPatterns } from "@/lib/data";
 import { FEATURED_PATTERN_IDS } from "@/lib/patterns";
+import { getArticles } from "@/lib/articles";
+import { articleCategoryLabel, observationStatusLabel } from "@/lib/articles";
+import { formatDate } from "@/lib/display";
 import { RiskBadge } from "@/components/RiskBadge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import type { ScamPattern } from "@/types/scam";
 
 export default function HomePage() {
@@ -12,6 +16,7 @@ export default function HomePage() {
   const patterns = FEATURED_PATTERN_IDS.map((id) => getSeedPatternById(id)).filter(
     (p): p is ScamPattern => Boolean(p),
   );
+  const latestArticle = getArticles()[0];
 
   return (
     <div>
@@ -139,6 +144,61 @@ export default function HomePage() {
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Button>
           </Link>
+        </div>
+      </section>
+
+      <section className="border-t border-[var(--border)] bg-[var(--paper-raised)]">
+        <div className="mx-auto max-w-6xl px-5 py-16">
+          <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] md:items-start">
+            <div>
+              <p className="annotation mb-1 flex items-center gap-1.5 text-[var(--accent-red)]">
+                <Eye className="h-3.5 w-3.5" aria-hidden />
+                Scam Folklore / 観測記事
+              </p>
+              <h2 className="text-2xl font-semibold leading-snug tracking-tight md:text-3xl">
+                構造の変化を、長文で追う
+              </h2>
+            </div>
+            <div>
+              {latestArticle ? (
+                <Link
+                  href={`/scam-folklore/${latestArticle.slug}`}
+                  className="group block rounded-sm border border-[var(--border)] bg-[var(--paper)] p-5 transition-colors hover:border-[var(--ink-faint)]"
+                >
+                  <div className="mb-2 flex flex-wrap items-center gap-2">
+                    <span className="annotation text-[var(--accent-red)]">
+                      {observationStatusLabel[latestArticle.status]}
+                    </span>
+                    <Badge variant="outline">
+                      {articleCategoryLabel[latestArticle.category]}
+                    </Badge>
+                    <time
+                      dateTime={latestArticle.publishedAt}
+                      className="annotation ml-auto text-[var(--ink-faint)]"
+                    >
+                      {formatDate(latestArticle.publishedAt)}
+                    </time>
+                  </div>
+                  <h3 className="text-lg font-semibold tracking-tight group-hover:text-[var(--ink)]">
+                    {latestArticle.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-[var(--ink-faint)]">
+                    {latestArticle.subtitle}
+                  </p>
+                  <p className="prose-ja mt-3 text-sm text-[var(--ink-muted)]">
+                    {latestArticle.summary}
+                  </p>
+                </Link>
+              ) : null}
+              <Link
+                href="/scam-folklore"
+                className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-[var(--ink)] underline-offset-4 hover:underline"
+              >
+                観測記事一覧を見る
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

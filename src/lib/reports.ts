@@ -2,7 +2,13 @@ import type {
   ReportCategory,
   ReportQuarter,
   ReportRegion,
+  TrendReport,
 } from "@/types/report";
+import { seedTrendReports } from "@/data/reports";
+
+export function getReportById(id: string): TrendReport | undefined {
+  return seedTrendReports.find((r) => r.id === id);
+}
 
 export const REPORT_QUARTERS: ReportQuarter[] = [
   "2025 Q1",
