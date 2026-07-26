@@ -11,6 +11,7 @@ import {
 } from "@/lib/articles";
 import { formatDate } from "@/lib/display";
 import { ArticleCardVisual } from "@/components/articles/TrustedAiPersonaHero";
+import { CounterfeitCardVisual } from "@/components/articles/CounterfeitIntimacyHero";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -20,7 +21,11 @@ function ArticleCard({ article }: { article: ScamFolkloreArticle }) {
   return (
     <Link href={`/scam-folklore/${article.slug}`} className="group">
       <Card className="flex h-full flex-col p-5 transition-colors hover:border-[var(--ink-faint)]">
-        <ArticleCardVisual slug={article.slug} />
+        {article.slug === "counterfeit-intimacy" ? (
+          <CounterfeitCardVisual />
+        ) : (
+          <ArticleCardVisual slug={article.slug} />
+        )}
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span className="annotation inline-flex items-center gap-1 text-[var(--accent-red)]">
             <Eye className="h-3 w-3" aria-hidden />

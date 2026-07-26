@@ -4,7 +4,10 @@
 
 export type ObservationStatus = "Observed" | "Emerging" | "Hypothesis";
 
-export type ArticleTemplate = "relationship-fraud" | "trusted-ai-persona";
+export type ArticleTemplate =
+  | "relationship-fraud"
+  | "trusted-ai-persona"
+  | "counterfeit-intimacy";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -15,7 +18,9 @@ export type ArticleCategory =
   | "Platform Scam"
   | "Intimacy Fraud"
   | "AI Persona"
-  | "Trust Exploitation";
+  | "Trust Exploitation"
+  | "Generated Trust"
+  | "Counterfeit Intimacy";
 
 export type ScamStackLayer = {
   layer: number;
@@ -69,6 +74,65 @@ export type ProtectiveDesignItem = {
   title: string;
   titleJa: string;
   description: string;
+};
+
+export type TrustTraditionCard = {
+  id: string;
+  title: string;
+  body: string;
+  guarantees: string[];
+};
+
+export type PersonaLayer = {
+  id: string;
+  title: string;
+  items: string[];
+};
+
+export type RomanceStage = {
+  number: string;
+  id: string;
+  title: string;
+  body: string;
+};
+
+export type LossCard = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export type AiOperationCard = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export type VictimBarrierCard = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export type VerificationLayerItem = {
+  id: string;
+  title: string;
+  titleJa: string;
+  description: string;
+};
+
+export type RelatedFolkloreLink = {
+  type: "internal-article" | "external";
+  href: string;
+  title: string;
+  description?: string;
+};
+
+export type PrivacyTensionColumn = {
+  title: string;
+  items: string[];
+  benefit: string;
+  risk: string;
 };
 
 export type ConnectedObservatory = {
@@ -292,7 +356,92 @@ export type TrustedAiPersonaArticle = ArticleBase & {
   };
 };
 
-export type ScamFolkloreArticle = ObservationArticle | TrustedAiPersonaArticle;
+/** 記事3: 偽の親密性（counterfeit-intimacy テンプレート） */
+export type CounterfeitIntimacyArticle = ArticleBase & {
+  template: "counterfeit-intimacy";
+  heroEyebrow: string;
+  trustState: string;
+  heroLead: string;
+  opening: {
+    title: string;
+    paragraphs: string[];
+    emphasis: string[];
+  };
+  communityTrust: {
+    title: string;
+    paragraphs: string[];
+    cards: TrustTraditionCard[];
+    emphasis: string[];
+  };
+  personaComposition: {
+    title: string;
+    paragraphs: string[];
+    layers: PersonaLayer[];
+    emphasis: string[];
+  };
+  romanceProgression: {
+    title: string;
+    intro: string;
+    stages: RomanceStage[];
+    emphasis: string[];
+  };
+  losses: {
+    title: string;
+    intro: string;
+    cards: LossCard[];
+    emphasis: string[];
+  };
+  aiPersonaOps: {
+    title: string;
+    paragraphs: string[];
+    cards: AiOperationCard[];
+    emphasis: string[];
+  };
+  deepfakeEvidence: {
+    title: string;
+    paragraphs: string[];
+    before: { items: string[]; conclusion: string };
+    after: { items: string[]; conclusion: string };
+    emphasis: string[];
+  };
+  supportingNetwork: {
+    title: string;
+    paragraphs: string[];
+    centerLabel: string;
+    nodes: string[];
+    emphasis: string[];
+  };
+  victimBarriers: {
+    title: string;
+    paragraphs: string[];
+    cards: VictimBarrierCard[];
+    emphasis: string[];
+  };
+  verificationLayers: {
+    title: string;
+    paragraphs: string[];
+    layers: VerificationLayerItem[];
+    note: string;
+  };
+  privacyTension: {
+    title: string;
+    verification: PrivacyTensionColumn;
+    privacy: PrivacyTensionColumn;
+    conclusion: string[];
+  };
+  questions: string[];
+  finalObservation: {
+    ja: string[];
+    en: string;
+  };
+  relatedFolklore: RelatedFolkloreLink[];
+  relatedArticleSlugs: string[];
+};
+
+export type ScamFolkloreArticle =
+  | ObservationArticle
+  | TrustedAiPersonaArticle
+  | CounterfeitIntimacyArticle;
 
 export function isTrustedAiPersonaArticle(
   article: ScamFolkloreArticle,
@@ -304,4 +453,10 @@ export function isRelationshipFraudArticle(
   article: ScamFolkloreArticle,
 ): article is ObservationArticle {
   return article.template === "relationship-fraud";
+}
+
+export function isCounterfeitIntimacyArticle(
+  article: ScamFolkloreArticle,
+): article is CounterfeitIntimacyArticle {
+  return article.template === "counterfeit-intimacy";
 }

@@ -3,11 +3,13 @@ import { notFound } from "next/navigation";
 import {
   getArticleBySlug,
   getArticles,
+  isCounterfeitIntimacyArticle,
   isRelationshipFraudArticle,
   isTrustedAiPersonaArticle,
 } from "@/lib/articles";
 import { ObservationArticleDetail } from "@/components/articles/ObservationArticleDetail";
 import { TrustedAiPersonaArticleDetail } from "@/components/articles/TrustedAiPersonaArticleDetail";
+import { CounterfeitIntimacyArticleDetail } from "@/components/articles/CounterfeitIntimacyArticleDetail";
 
 type Params = { slug: string };
 
@@ -68,6 +70,10 @@ export default async function ObservationArticlePage({
 
   if (!article) {
     notFound();
+  }
+
+  if (isCounterfeitIntimacyArticle(article)) {
+    return <CounterfeitIntimacyArticleDetail article={article} />;
   }
 
   if (isTrustedAiPersonaArticle(article)) {
