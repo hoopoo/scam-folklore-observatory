@@ -7,7 +7,8 @@ export type ObservationStatus = "Observed" | "Emerging" | "Hypothesis";
 export type ArticleTemplate =
   | "relationship-fraud"
   | "trusted-ai-persona"
-  | "counterfeit-intimacy";
+  | "counterfeit-intimacy"
+  | "counterfeit-curiosity-exits";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -20,7 +21,11 @@ export type ArticleCategory =
   | "AI Persona"
   | "Trust Exploitation"
   | "Generated Trust"
-  | "Counterfeit Intimacy";
+  | "Counterfeit Intimacy"
+  | "Creator Scam"
+  | "Identity Theft"
+  | "Dark Patterns"
+  | "AI Scam";
 
 export type ScamStackLayer = {
   layer: number;
@@ -438,10 +443,103 @@ export type CounterfeitIntimacyArticle = ArticleBase & {
   relatedArticleSlugs: string[];
 };
 
+export type DisguiseSection = {
+  number: number;
+  title: string;
+  intro?: string;
+  examples: string[];
+  reasons?: string[];
+  emphasis?: string[];
+  quote?: string[];
+  linkNote?: string;
+};
+
+export type CuriosityStage = {
+  stage: number;
+  id: string;
+  title: string;
+  titleJa: string;
+  items: string[];
+};
+
+export type ServiceComparisonRow = {
+  aspect: string;
+  aspectJa: string;
+  legitimate: string;
+  fraudulent: string;
+};
+
+export type ChecklistCategory = {
+  id: string;
+  title: string;
+  items: string[];
+};
+
+export type FolklorePatternCard = {
+  patternName: string;
+  japaneseName: string;
+  description: string;
+  commonBaits: string[];
+  extractedAssets: string[];
+  earlyWarningSignal: { en: string; ja: string };
+};
+
+export type ExitBranch = {
+  center: string;
+  centerJa: string;
+  genuine: { title: string; items: string[] };
+  counterfeit: { title: string; items: string[] };
+  emphasis: string[];
+  emphasisJa: string[];
+};
+
+/** 記事4: 好奇心の出口（counterfeit-curiosity-exits テンプレート） */
+export type CounterfeitCuriosityArticle = ArticleBase & {
+  template: "counterfeit-curiosity-exits";
+  heroEyebrow: string;
+  coreThesis: string[];
+  introduction: string[];
+  exitBranch: ExitBranch;
+  sectionExitDisguise: {
+    title: string;
+    paragraphs: string[];
+    emotions: string[];
+    emphasis: string[];
+  };
+  disguiseSections: DisguiseSection[];
+  curiosityStages: {
+    stages: CuriosityStage[];
+    flowLabel: string;
+  };
+  serviceComparison: {
+    title: string;
+    rows: ServiceComparisonRow[];
+  };
+  verificationChecklist: {
+    title: string;
+    categories: ChecklistCategory[];
+    emphasis: string[];
+  };
+  conclusion: {
+    paragraphs: string[];
+    practices: string[];
+    emphasis: string[];
+  };
+  folklorePattern: FolklorePatternCard;
+  connectedObservatories: ConnectedObservatory[];
+  verifyExitCta: {
+    title: string;
+    body: string;
+    buttons: { label: string; href: string }[];
+  };
+  relatedArticleSlugs: string[];
+};
+
 export type ScamFolkloreArticle =
   | ObservationArticle
   | TrustedAiPersonaArticle
-  | CounterfeitIntimacyArticle;
+  | CounterfeitIntimacyArticle
+  | CounterfeitCuriosityArticle;
 
 export function isTrustedAiPersonaArticle(
   article: ScamFolkloreArticle,
@@ -459,4 +557,10 @@ export function isCounterfeitIntimacyArticle(
   article: ScamFolkloreArticle,
 ): article is CounterfeitIntimacyArticle {
   return article.template === "counterfeit-intimacy";
+}
+
+export function isCounterfeitCuriosityArticle(
+  article: ScamFolkloreArticle,
+): article is CounterfeitCuriosityArticle {
+  return article.template === "counterfeit-curiosity-exits";
 }

@@ -2,16 +2,19 @@ import type {
   ArticleCategory,
   ScamFolkloreArticle,
 } from "@/types/article";
+import { counterfeitCuriosityExits } from "@/data/articles/counterfeit-curiosity-exits";
 import { counterfeitIntimacy } from "@/data/articles/counterfeit-intimacy";
 import { fraudAsRelationship } from "@/data/articles/fraud-as-relationship";
 import { trustedAiPersonaScam } from "@/data/articles/trusted-ai-persona-scam";
 import {
+  isCounterfeitCuriosityArticle,
   isCounterfeitIntimacyArticle,
   isRelationshipFraudArticle,
   isTrustedAiPersonaArticle,
 } from "@/types/article";
 
 const ARTICLES: ScamFolkloreArticle[] = [
+  counterfeitCuriosityExits,
   counterfeitIntimacy,
   trustedAiPersonaScam,
   fraudAsRelationship,
@@ -29,6 +32,10 @@ export const articleCategoryLabel: Record<ArticleCategory, string> = {
   "Trust Exploitation": "信頼の悪用",
   "Generated Trust": "生成された信頼",
   "Counterfeit Intimacy": "偽の親密性",
+  "Creator Scam": "創作詐欺",
+  "Identity Theft": "身元盗用",
+  "Dark Patterns": "ダークパターン",
+  "AI Scam": "AI詐欺",
 };
 
 export const observationStatusLabel: Record<
@@ -103,6 +110,7 @@ export function getAllArticleCategories(): ArticleCategory[] {
 }
 
 export {
+  isCounterfeitCuriosityArticle,
   isCounterfeitIntimacyArticle,
   isRelationshipFraudArticle,
   isTrustedAiPersonaArticle,
