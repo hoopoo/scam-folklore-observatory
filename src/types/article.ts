@@ -8,7 +8,8 @@ export type ArticleTemplate =
   | "relationship-fraud"
   | "trusted-ai-persona"
   | "counterfeit-intimacy"
-  | "counterfeit-curiosity-exits";
+  | "counterfeit-curiosity-exits"
+  | "forged-authority";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -25,7 +26,9 @@ export type ArticleCategory =
   | "Creator Scam"
   | "Identity Theft"
   | "Dark Patterns"
-  | "AI Scam";
+  | "AI Scam"
+  | "Authority Fraud"
+  | "Corporate Scam";
 
 export type ScamStackLayer = {
   layer: number;
@@ -145,7 +148,32 @@ export type ConnectedObservatory = {
   title: string;
   tagline: string;
   description: string;
-  href: string;
+  /** 実ページが存在する場合のみ設定。未設定または coming-soon のときはリンクしない */
+  href?: string;
+  status?: "available" | "coming-soon";
+};
+
+export type EvolutionPhase = {
+  phase: string;
+  title: string;
+  titleJa: string;
+  items: string[];
+};
+
+export type DefensivePrinciple = {
+  id: string;
+  number: string;
+  title: string;
+};
+
+export type ObservationSection = {
+  number: string;
+  titleEn: string;
+  titleJa: string;
+  paragraphs: string[];
+  bullets?: string[];
+  quotes?: string[];
+  emphasis?: string[];
 };
 
 export type ArticleMetadata = {
@@ -535,11 +563,41 @@ export type CounterfeitCuriosityArticle = ArticleBase & {
   relatedArticleSlugs: string[];
 };
 
+/** 記事5: 偽造される権限（forged-authority テンプレート） */
+export type ForgedAuthorityArticle = ArticleBase & {
+  template: "forged-authority";
+  readingTime: string;
+  featured: boolean;
+  heroEyebrow: string;
+  heroHeadline: string[];
+  lead: string[];
+  sections: ObservationSection[];
+  pullQuote: string[];
+  keyFindings: ScamFolkloreLensItem[];
+  scamPattern: {
+    title: string;
+    titleJa: string;
+    steps: FlowStep[];
+  };
+  scamEvolution: {
+    title: string;
+    titleJa: string;
+    phases: EvolutionPhase[];
+  };
+  signalsToWatch: string[];
+  defensivePrinciples: DefensivePrinciple[];
+  editorialNote: string[];
+  connectedObservatories: ConnectedObservatory[];
+  relatedArticleSlugs: string[];
+  folkloreConnection: string;
+};
+
 export type ScamFolkloreArticle =
   | ObservationArticle
   | TrustedAiPersonaArticle
   | CounterfeitIntimacyArticle
-  | CounterfeitCuriosityArticle;
+  | CounterfeitCuriosityArticle
+  | ForgedAuthorityArticle;
 
 export function isTrustedAiPersonaArticle(
   article: ScamFolkloreArticle,
@@ -563,4 +621,10 @@ export function isCounterfeitCuriosityArticle(
   article: ScamFolkloreArticle,
 ): article is CounterfeitCuriosityArticle {
   return article.template === "counterfeit-curiosity-exits";
+}
+
+export function isForgedAuthorityArticle(
+  article: ScamFolkloreArticle,
+): article is ForgedAuthorityArticle {
+  return article.template === "forged-authority";
 }

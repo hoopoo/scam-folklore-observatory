@@ -6,15 +6,17 @@ export function AdviceWarningSigns({
   title,
   titleJa,
   signs,
+  heading = "Warning Signs",
 }: {
   title: string;
   titleJa: string;
   signs: string[];
+  heading?: string;
 }) {
   return (
     <section className="mt-12">
       <h2 className="mb-2 text-lg font-semibold tracking-tight">
-        Warning Signs
+        {heading}
       </h2>
       <p className="annotation mb-6">
         {title} / {titleJa}

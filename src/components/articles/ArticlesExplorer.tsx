@@ -13,6 +13,7 @@ import { formatDate } from "@/lib/display";
 import { ArticleCardVisual } from "@/components/articles/TrustedAiPersonaHero";
 import { CounterfeitCardVisual } from "@/components/articles/CounterfeitIntimacyHero";
 import { CounterfeitCuriosityCardVisual } from "@/components/articles/CounterfeitCuriosityHero";
+import { ForgedAuthorityCardVisual } from "@/components/articles/ForgedAuthorityHero";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -22,7 +23,9 @@ function ArticleCard({ article }: { article: ScamFolkloreArticle }) {
   return (
     <Link href={`/scam-folklore/${article.slug}`} className="group">
       <Card className="flex h-full flex-col p-5 transition-colors hover:border-[var(--ink-faint)]">
-        {article.slug === "counterfeit-curiosity-exits" ? (
+        {article.slug === "ai-forged-authority" ? (
+          <ForgedAuthorityCardVisual />
+        ) : article.slug === "counterfeit-curiosity-exits" ? (
           <CounterfeitCuriosityCardVisual />
         ) : article.slug === "counterfeit-intimacy" ? (
           <CounterfeitCardVisual />
@@ -95,7 +98,10 @@ export function ArticlesExplorer({
       });
     }
     if (category !== "all") {
-      result = result.filter((a) => a.category === category);
+      result = result.filter(
+        (a) =>
+          a.category === category || a.categories?.includes(category),
+      );
     }
     return result;
   }, [articles, query, category]);

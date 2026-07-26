@@ -5,6 +5,7 @@ import {
   getArticles,
   isCounterfeitCuriosityArticle,
   isCounterfeitIntimacyArticle,
+  isForgedAuthorityArticle,
   isRelationshipFraudArticle,
   isTrustedAiPersonaArticle,
 } from "@/lib/articles";
@@ -12,6 +13,7 @@ import { ObservationArticleDetail } from "@/components/articles/ObservationArtic
 import { TrustedAiPersonaArticleDetail } from "@/components/articles/TrustedAiPersonaArticleDetail";
 import { CounterfeitIntimacyArticleDetail } from "@/components/articles/CounterfeitIntimacyArticleDetail";
 import { CounterfeitCuriosityArticleDetail } from "@/components/articles/CounterfeitCuriosityArticleDetail";
+import { ForgedAuthorityArticleDetail } from "@/components/articles/ForgedAuthorityArticleDetail";
 
 type Params = { slug: string };
 
@@ -72,6 +74,10 @@ export default async function ObservationArticlePage({
 
   if (!article) {
     notFound();
+  }
+
+  if (isForgedAuthorityArticle(article)) {
+    return <ForgedAuthorityArticleDetail article={article} />;
   }
 
   if (isCounterfeitCuriosityArticle(article)) {
