@@ -65,3 +65,120 @@ body {
     linear-gradient(to bottom, rgba(35, 34, 32, 0.035) 1px, transparent 1px);
   background-size: 28px 28px;
 }
+
+/* Article motion — subtle, observational. Disabled when reduced motion preferred. */
+@keyframes article-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-text-morph {
+  0%,
+  40% {
+    opacity: 1;
+  }
+  50%,
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-text-morph-alt {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  50%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes memory-layer-drift {
+  0%,
+  100% {
+    opacity: 0.04;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.08;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes boundary-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-article-in {
+  animation: article-fade-up 0.7s ease both;
+}
+
+.animate-hero-morph-a {
+  animation: hero-text-morph 12s ease-in-out infinite;
+}
+
+.animate-hero-morph-b {
+  animation: hero-text-morph-alt 12s ease-in-out infinite;
+}
+
+.animate-memory-drift {
+  animation: memory-layer-drift 8s ease-in-out infinite;
+}
+
+.animate-boundary-shift {
+  background-size: 200% 200%;
+  animation: boundary-shift 10s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-article-in,
+  .animate-hero-morph-a,
+  .animate-hero-morph-b,
+  .animate-memory-drift,
+  .animate-boundary-shift {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-1,
+  .stagger-2,
+  .stagger-3,
+  .stagger-4,
+  .stagger-5,
+  .stagger-6,
+  .stagger-7,
+  .stagger-8 {
+    animation-delay: 0s;
+  }
+}

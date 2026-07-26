@@ -1,7 +1,18 @@
-import type { ArticleCategory, ObservationArticle } from "@/types/article";
+import type {
+  ArticleCategory,
+  ScamFolkloreArticle,
+} from "@/types/article";
 import { fraudAsRelationship } from "@/data/articles/fraud-as-relationship";
+import { trustedAiPersonaScam } from "@/data/articles/trusted-ai-persona-scam";
+import {
+  isRelationshipFraudArticle,
+  isTrustedAiPersonaArticle,
+} from "@/types/article";
 
-const ARTICLES: ObservationArticle[] = [fraudAsRelationship];
+const ARTICLES: ScamFolkloreArticle[] = [
+  trustedAiPersonaScam,
+  fraudAsRelationship,
+];
 
 export const articleCategoryLabel: Record<ArticleCategory, string> = {
   "Relationship Fraud": "関係型詐欺",
@@ -10,10 +21,13 @@ export const articleCategoryLabel: Record<ArticleCategory, string> = {
   "Romance Scam": "ロマンス詐欺",
   "Emotional Manipulation": "感情操作",
   "Platform Scam": "プラットフォーム詐欺",
+  "Intimacy Fraud": "親密性の詐欺",
+  "AI Persona": "AI人格",
+  "Trust Exploitation": "信頼の悪用",
 };
 
 export const observationStatusLabel: Record<
-  ObservationArticle["status"],
+  ScamFolkloreArticle["status"],
   string
 > = {
   Observed: "観測済み",
@@ -21,33 +35,28 @@ export const observationStatusLabel: Record<
   Hypothesis: "仮説",
 };
 
-export function getArticles(): ObservationArticle[] {
+export function getArticles(): ScamFolkloreArticle[] {
   return ARTICLES.slice().sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 
-export function getArticleBySlug(slug: string): ObservationArticle | undefined {
+export function getArticleBySlug(slug: string): ScamFolkloreArticle | undefined {
   return ARTICLES.find((a) => a.slug === slug);
 }
 
 export function getArticlesByCategory(
   category: ArticleCategory,
-): ObservationArticle[] {
-  return getArticles().filter((a) => a.category === category);
-}
-
-export function getArticlesByTag(tag: string): ObservationArticle[] {
-  const normalized = tag.toLowerCase();
+): ScamFolkloreArticle[] {
   return getArticles().filter(
     (a) =>
-      a.tags.some((t) => t.toLowerCase() === normalized) ||
-      a.tagsJa.some((t) => t === tag),
+      a.category === category ||
+      a.categories?.includes(category),
   );
 }
 
-export function searchArticles(query: string): ObservationArticle[] {
+export function searchArticles(query: string): ScamFolkloreArticle[] {
   const q = query.trim().toLowerCase();
   if (!q) return getArticles();
   return getArticles().filter((a) => {
@@ -56,6 +65,7 @@ export function searchArticles(query: string): ObservationArticle[] {
       a.subtitle,
       a.summary,
       a.category,
+      ...(a.categories ?? []),
       ...a.tags,
       ...a.tagsJa,
     ]
@@ -79,5 +89,12 @@ export function getAllArticleTags(): { en: string[]; ja: string[] } {
 }
 
 export function getAllArticleCategories(): ArticleCategory[] {
-  return [...new Set(ARTICLES.map((a) => a.category))].sort();
+  const cats = new Set<ArticleCategory>();
+  for (const a of ARTICLES) {
+    cats.add(a.category);
+    a.categories?.forEach((c) => cats.add(c));
+  }
+  return [...cats].sort();
 }
+
+export { isRelationshipFraudArticle, isTrustedAiPersonaArticle };

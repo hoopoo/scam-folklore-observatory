@@ -1,9 +1,10 @@
 /**
  * 長文観測記事（Observation Article）の型。
- * Patterns / Reports / Forecasts とは別系統の、構造分析エッセイ向け。
  */
 
 export type ObservationStatus = "Observed" | "Emerging" | "Hypothesis";
+
+export type ArticleTemplate = "relationship-fraud" | "trusted-ai-persona";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -11,7 +12,10 @@ export type ArticleCategory =
   | "AI Fraud"
   | "Romance Scam"
   | "Emotional Manipulation"
-  | "Platform Scam";
+  | "Platform Scam"
+  | "Intimacy Fraud"
+  | "AI Persona"
+  | "Trust Exploitation";
 
 export type ScamStackLayer = {
   layer: number;
@@ -34,57 +38,96 @@ export type VerificationItem = {
   question: string;
 };
 
-export type CrossObservatoryLink = {
+export type ComparisonColumn = {
+  title: string;
+  items: string[];
+};
+
+export type FlowStep = {
+  label: string;
+  sublabel?: string;
+};
+
+export type ScamFolkloreLensItem = {
   id: string;
   title: string;
+  titleJa: string;
   description: string;
-  href?: string;
-  status: "available" | "coming-soon";
 };
 
-export type RelatedObservationLink = {
-  type: "pattern" | "report" | "forecast" | "trust-hook";
+export type ScenarioItem = {
   id: string;
-  label: string;
+  number: string;
+  title: string;
+  titleJa: string;
+  body: string[];
+  question: string;
 };
 
-export type ObservationArticle = {
+export type ProtectiveDesignItem = {
+  id: string;
+  title: string;
+  titleJa: string;
+  description: string;
+};
+
+export type ConnectedObservatory = {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  href: string;
+};
+
+export type ArticleMetadata = {
+  description: string;
+  ogTitle: string;
+  ogDescription: string;
+  pageTitle?: string;
+};
+
+export type ArticleBase = {
   slug: string;
+  template: ArticleTemplate;
   title: string;
   subtitle: string;
+  titleEn?: string;
+  subtitleEn?: string;
+  /** 一覧フィルタ用の主カテゴリ */
   category: ArticleCategory;
+  /** 表示用の複数カテゴリ */
+  categories?: ArticleCategory[];
   status: ObservationStatus;
   summary: string;
-  heroCopy: string[];
-  heroSupplement: string;
   tags: string[];
   tagsJa: string[];
   publishedAt: string;
   updatedAt: string;
   language: "ja";
-  metadata: {
-    description: string;
-    ogTitle: string;
-    ogDescription: string;
-  };
+  metadata: ArticleMetadata;
   relatedPatternIds: string[];
   relatedReportIds: string[];
   relatedForecastIds: string[];
   relatedTrustHookIds: string[];
   sourceNote: string;
+};
+
+/** 記事1: 関係型詐欺（relationship-fraud テンプレート） */
+export type ObservationArticle = ArticleBase & {
+  template: "relationship-fraud";
+  heroCopy: string[];
+  heroSupplement: string;
   folkloreConnection: string;
   closingStatement: string[];
   closingConclusion: string[];
   openQuestions: string[];
   emphasizedOpenQuestion: string;
-  /** Section 1 */
   observation: {
     intro: string;
     designedElements: string[];
     flow: string;
     beliefItems: string[];
   };
-  /** Section 2 */
   fraudEvolution: {
     intro: string;
     traditional: { title: string; items: string[] };
@@ -92,9 +135,7 @@ export type ObservationArticle = {
     bridge: string;
     emphasis: string[];
   };
-  /** Section 3 */
   scamStack: ScamStackLayer[];
-  /** Section 4 */
   trustRepetition: {
     intro: string;
     repetitionItems: string[];
@@ -102,7 +143,6 @@ export type ObservationArticle = {
     emphasis: string[];
     aiNote: string;
   };
-  /** Section 5 */
   scamEntry: {
     intro: string;
     entryPoints: string[];
@@ -110,7 +150,6 @@ export type ObservationArticle = {
     emphasis: string[];
     securityNote: string;
   };
-  /** Section 6 */
   hybridOperation: {
     intro: string;
     hybridItems: string[];
@@ -118,28 +157,151 @@ export type ObservationArticle = {
     realityItems: string[];
     emphasis: string[];
   };
-  /** Section 7 */
   entertainmentBoundary: {
     intro: string;
     entertainment: { title: string; items: string[] };
     fraud: { title: string; items: string[] };
     emphasis: string[];
   };
-  /** Section 8 */
   emotionalData: {
     intro: string;
     dataItems: string[];
     emphasis: string[];
     privacyNote: string;
   };
-  /** Section 9 */
   warningSigns: WarningSignCategory[];
   warningDisclaimer: string;
-  /** Section 10 */
   verificationLayers: VerificationItem[];
-  /** Section 11 */
   beforeAfter: {
     before: { title: string; items: string[] };
     after: { title: string; items: string[] };
   };
 };
+
+/** 記事2: 親密性の詐欺（trusted-ai-persona テンプレート） */
+export type TrustedAiPersonaArticle = ArticleBase & {
+  template: "trusted-ai-persona";
+  heroQuote: string[];
+  lead: {
+    paragraphs: string[];
+    transition: string[];
+    personaTraits: string[];
+    recommendationExamples: string[];
+    emphasis: string[];
+  };
+  section01: {
+    title: string;
+    intro: string;
+    traditionalItems: string[];
+    aiTraits: string[];
+    emphasis: string[];
+    comparison: {
+      left: ComparisonColumn;
+      center: string;
+      right: ComparisonColumn;
+    };
+  };
+  section02: {
+    title: string;
+    intro: string;
+    trustItems: string[];
+    bridge: string;
+    emphasis: string[];
+    flow: {
+      title: string;
+      titleJa: string;
+      steps: FlowStep[];
+    };
+  };
+  section03: {
+    title: string;
+    intro: string;
+    dataItems: string[];
+    emphasis: string[];
+    flow: {
+      steps: FlowStep[];
+      actions: string[];
+    };
+  };
+  section04: {
+    title: string;
+    intro: string;
+    traditionalAd: string[];
+    conversationalExamples: string[];
+    emphasis: string[];
+    comparison: {
+      left: ComparisonColumn;
+      center: string;
+      right: ComparisonColumn;
+    };
+  };
+  section05: {
+    title: string;
+    intro: string;
+    carePhrases: string[];
+    bridge: string;
+    emphasis: string[];
+    care: ComparisonColumn;
+    control: ComparisonColumn;
+  };
+  section06: {
+    title: string;
+    intro: string;
+    risks: string[];
+    emphasis: string[];
+    flow: { steps: FlowStep[] };
+  };
+  section07: {
+    title: string;
+    intro: string;
+    process: string[];
+    emphasis: string[];
+    evolution: {
+      title: string;
+      titleJa: string;
+      steps: FlowStep[];
+    };
+  };
+  scamFolkloreLens: ScamFolkloreLensItem[];
+  fraudTransformation: {
+    old: { label: string; steps: string[] };
+    emerging: { label: string; steps: string[] };
+    emphasis: string[];
+    emphasisJa: string[];
+  };
+  tensionMap: {
+    helpful: ComparisonColumn;
+    exploitable: ComparisonColumn;
+    conclusion: string;
+  };
+  observationFragments: string[];
+  scenarios: ScenarioItem[];
+  warningSigns: {
+    title: string;
+    titleJa: string;
+    signs: string[];
+  };
+  protectiveDesign: {
+    items: ProtectiveDesignItem[];
+    emphasis: string[];
+  };
+  connectedObservatories: ConnectedObservatory[];
+  finalQuestion: {
+    ja: string[];
+    en: string;
+  };
+};
+
+export type ScamFolkloreArticle = ObservationArticle | TrustedAiPersonaArticle;
+
+export function isTrustedAiPersonaArticle(
+  article: ScamFolkloreArticle,
+): article is TrustedAiPersonaArticle {
+  return article.template === "trusted-ai-persona";
+}
+
+export function isRelationshipFraudArticle(
+  article: ScamFolkloreArticle,
+): article is ObservationArticle {
+  return article.template === "relationship-fraud";
+}

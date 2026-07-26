@@ -3,28 +3,34 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Eye, Search } from "lucide-react";
-import type { ArticleCategory, ObservationArticle } from "@/types/article";
+import type { ArticleCategory, ScamFolkloreArticle } from "@/types/article";
 import {
   articleCategoryLabel,
   getAllArticleCategories,
   observationStatusLabel,
 } from "@/lib/articles";
 import { formatDate } from "@/lib/display";
+import { ArticleCardVisual } from "@/components/articles/TrustedAiPersonaHero";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-function ArticleCard({ article }: { article: ObservationArticle }) {
+function ArticleCard({ article }: { article: ScamFolkloreArticle }) {
+  const displayCategories = article.categories ?? [article.category];
+
   return (
     <Link href={`/scam-folklore/${article.slug}`} className="group">
       <Card className="flex h-full flex-col p-5 transition-colors hover:border-[var(--ink-faint)]">
+        <ArticleCardVisual slug={article.slug} />
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span className="annotation inline-flex items-center gap-1 text-[var(--accent-red)]">
             <Eye className="h-3 w-3" aria-hidden />
             {observationStatusLabel[article.status]}
           </span>
-          <Badge variant="outline">
-            {articleCategoryLabel[article.category]}
-          </Badge>
+          {displayCategories.slice(0, 2).map((c) => (
+            <Badge key={c} variant="outline">
+              {articleCategoryLabel[c]}
+            </Badge>
+          ))}
         </div>
         <h2 className="text-base font-semibold leading-snug tracking-tight group-hover:text-[var(--ink)]">
           {article.title}
@@ -55,7 +61,7 @@ function ArticleCard({ article }: { article: ObservationArticle }) {
 export function ArticlesExplorer({
   articles,
 }: {
-  articles: ObservationArticle[];
+  articles: ScamFolkloreArticle[];
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<ArticleCategory | "all">("all");

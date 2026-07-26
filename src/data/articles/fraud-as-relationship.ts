@@ -2,6 +2,7 @@ import type { ObservationArticle } from "@/types/article";
 
 export const fraudAsRelationship: ObservationArticle = {
   slug: "fraud-as-relationship",
+  template: "relationship-fraud",
   title: "詐欺は、関係そのものになる",
   subtitle: "偽の身体、偽の人格、そして継続課金される親密性",
   category: "Relationship Fraud",

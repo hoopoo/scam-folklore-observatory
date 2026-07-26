@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getArticleBySlug, getArticles } from "@/lib/articles";
+import {
+  getArticleBySlug,
+  getArticles,
+  isRelationshipFraudArticle,
+  isTrustedAiPersonaArticle,
+} from "@/lib/articles";
 import { ObservationArticleDetail } from "@/components/articles/ObservationArticleDetail";
+import { TrustedAiPersonaArticleDetail } from "@/components/articles/TrustedAiPersonaArticleDetail";
 
 type Params = { slug: string };
 
@@ -25,8 +31,11 @@ export async function generateMetadata({
     return { title: "観測記事" };
   }
 
+  const title =
+    article.metadata.pageTitle ?? article.metadata.ogTitle;
+
   return {
-    title: article.metadata.ogTitle,
+    title,
     description: article.metadata.description,
     openGraph: {
       title: article.metadata.ogTitle,
@@ -34,6 +43,14 @@ export async function generateMetadata({
       type: "article",
       publishedTime: article.publishedAt,
       locale: "ja_JP",
+      images: [
+        {
+          url: `${SITE_URL}/scam-folklore/${article.slug}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: article.metadata.ogTitle,
+        },
+      ],
     },
     alternates: {
       canonical: `${SITE_URL}/scam-folklore/${article.slug}`,
@@ -53,5 +70,13 @@ export default async function ObservationArticlePage({
     notFound();
   }
 
-  return <ObservationArticleDetail article={article} />;
+  if (isTrustedAiPersonaArticle(article)) {
+    return <TrustedAiPersonaArticleDetail article={article} />;
+  }
+
+  if (isRelationshipFraudArticle(article)) {
+    return <ObservationArticleDetail article={article} />;
+  }
+
+  notFound();
 }
