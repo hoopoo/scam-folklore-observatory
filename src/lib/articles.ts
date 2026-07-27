@@ -6,6 +6,7 @@ import { aiForgedAuthority } from "@/data/articles/ai-forged-authority";
 import { corporateDevouringMa } from "@/data/articles/corporate-devouring-ma";
 import { counterfeitCuriosityExits } from "@/data/articles/counterfeit-curiosity-exits";
 import { counterfeitIntimacy } from "@/data/articles/counterfeit-intimacy";
+import { relationalScamsBeginWithLoneliness } from "@/data/articles/relational-scams-begin-with-loneliness";
 import { forgedRelationship } from "@/data/articles/forged-relationship";
 import { fraudAsRelationship } from "@/data/articles/fraud-as-relationship";
 import { trustedAiPersonaScam } from "@/data/articles/trusted-ai-persona-scam";
@@ -15,11 +16,13 @@ import {
   isCounterfeitIntimacyArticle,
   isForgedAuthorityArticle,
   isForgedRelationshipArticle,
+  isRelationalScamsLonelinessArticle,
   isRelationshipFraudArticle,
   isTrustedAiPersonaArticle,
 } from "@/types/article";
 
 const ARTICLES: ScamFolkloreArticle[] = [
+  relationalScamsBeginWithLoneliness,
   forgedRelationship,
   corporateDevouringMa,
   aiForgedAuthority,
@@ -128,6 +131,7 @@ export {
   isCounterfeitIntimacyArticle,
   isForgedAuthorityArticle,
   isForgedRelationshipArticle,
+  isRelationalScamsLonelinessArticle,
   isRelationshipFraudArticle,
   isTrustedAiPersonaArticle,
 };

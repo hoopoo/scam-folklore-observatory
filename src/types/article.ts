@@ -11,7 +11,8 @@ export type ArticleTemplate =
   | "counterfeit-curiosity-exits"
   | "forged-authority"
   | "corporate-devouring-ma"
-  | "forged-relationship";
+  | "forged-relationship"
+  | "relational-scams-loneliness";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -742,6 +743,45 @@ export type CorporateDevouringMaArticle = ArticleBase & {
   folkloreConnection: string;
 };
 
+export type RelationalLoopStage = {
+  id: string;
+  number: number;
+  title: string;
+  description: string;
+};
+
+export type SafetyQuestionsBlock = {
+  title: string;
+  questions: string[];
+  disclaimer: string;
+};
+
+/** 記事8: 孤独を入口にする関係性の詐欺（relational-scams-loneliness テンプレート） */
+export type RelationalScamsLonelinessArticle = ArticleBase & {
+  template: "relational-scams-loneliness";
+  readingTime: string;
+  featured?: boolean;
+  heroEyebrow: string;
+  heroAlt: string;
+  coreQuestion: string[];
+  lead: string[];
+  sections: ObservationSection[];
+  keyObservation: string[];
+  scamFolkloreLens: ScamFolkloreLensItem[];
+  signal: string;
+  implications: string[];
+  relationalLoop: {
+    centerLabel: string;
+    stages: RelationalLoopStage[];
+    caption: string;
+  };
+  safetyQuestions: SafetyQuestionsBlock;
+  observationSummary: ObservationSummaryCard[];
+  connectedObservatories: ConnectedObservatory[];
+  relatedArticleSlugs: string[];
+  folkloreConnection: string;
+};
+
 /** 記事7: 偽装されるのは書類ではなく関係（forged-relationship テンプレート） */
 export type ForgedRelationshipArticle = ArticleBase & {
   template: "forged-relationship";
@@ -769,7 +809,8 @@ export type ScamFolkloreArticle =
   | CounterfeitCuriosityArticle
   | ForgedAuthorityArticle
   | CorporateDevouringMaArticle
-  | ForgedRelationshipArticle;
+  | ForgedRelationshipArticle
+  | RelationalScamsLonelinessArticle;
 
 export function isTrustedAiPersonaArticle(
   article: ScamFolkloreArticle,
@@ -811,4 +852,10 @@ export function isForgedRelationshipArticle(
   article: ScamFolkloreArticle,
 ): article is ForgedRelationshipArticle {
   return article.template === "forged-relationship";
+}
+
+export function isRelationalScamsLonelinessArticle(
+  article: ScamFolkloreArticle,
+): article is RelationalScamsLonelinessArticle {
+  return article.template === "relational-scams-loneliness";
 }
