@@ -10,7 +10,8 @@ export type ArticleTemplate =
   | "counterfeit-intimacy"
   | "counterfeit-curiosity-exits"
   | "forged-authority"
-  | "corporate-devouring-ma";
+  | "corporate-devouring-ma"
+  | "forged-relationship";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -741,13 +742,34 @@ export type CorporateDevouringMaArticle = ArticleBase & {
   folkloreConnection: string;
 };
 
+/** 記事7: 偽装されるのは書類ではなく関係（forged-relationship テンプレート） */
+export type ForgedRelationshipArticle = ArticleBase & {
+  template: "forged-relationship";
+  readingTime: string;
+  featured: boolean;
+  heroEyebrow: string;
+  heroHeadline: string[];
+  heroAlt: string;
+  lead: string[];
+  sections: ObservationSection[];
+  keyObservation: string[];
+  scamPatterns: ScamFolkloreLensItem[];
+  folkloreLens: string[];
+  openQuestion: string;
+  closingStatement: string[];
+  connectedObservatories: ConnectedObservatory[];
+  relatedArticleSlugs: string[];
+  folkloreConnection: string;
+};
+
 export type ScamFolkloreArticle =
   | ObservationArticle
   | TrustedAiPersonaArticle
   | CounterfeitIntimacyArticle
   | CounterfeitCuriosityArticle
   | ForgedAuthorityArticle
-  | CorporateDevouringMaArticle;
+  | CorporateDevouringMaArticle
+  | ForgedRelationshipArticle;
 
 export function isTrustedAiPersonaArticle(
   article: ScamFolkloreArticle,
@@ -783,4 +805,10 @@ export function isCorporateDevouringMaArticle(
   article: ScamFolkloreArticle,
 ): article is CorporateDevouringMaArticle {
   return article.template === "corporate-devouring-ma";
+}
+
+export function isForgedRelationshipArticle(
+  article: ScamFolkloreArticle,
+): article is ForgedRelationshipArticle {
+  return article.template === "forged-relationship";
 }
