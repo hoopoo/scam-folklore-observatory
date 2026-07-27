@@ -3,11 +3,13 @@ import type {
   ScamFolkloreArticle,
 } from "@/types/article";
 import { aiForgedAuthority } from "@/data/articles/ai-forged-authority";
+import { corporateDevouringMa } from "@/data/articles/corporate-devouring-ma";
 import { counterfeitCuriosityExits } from "@/data/articles/counterfeit-curiosity-exits";
 import { counterfeitIntimacy } from "@/data/articles/counterfeit-intimacy";
 import { fraudAsRelationship } from "@/data/articles/fraud-as-relationship";
 import { trustedAiPersonaScam } from "@/data/articles/trusted-ai-persona-scam";
 import {
+  isCorporateDevouringMaArticle,
   isCounterfeitCuriosityArticle,
   isCounterfeitIntimacyArticle,
   isForgedAuthorityArticle,
@@ -16,6 +18,7 @@ import {
 } from "@/types/article";
 
 const ARTICLES: ScamFolkloreArticle[] = [
+  corporateDevouringMa,
   aiForgedAuthority,
   counterfeitCuriosityExits,
   counterfeitIntimacy,
@@ -41,6 +44,8 @@ export const articleCategoryLabel: Record<ArticleCategory, string> = {
   "AI Scam": "AI詐欺",
   "Authority Fraud": "権限偽造",
   "Corporate Scam": "企業詐欺",
+  "Institutional Scam": "制度型詐欺",
+  "Corporate Identity": "企業アイデンティティ",
 };
 
 export const observationStatusLabel: Record<
@@ -115,6 +120,7 @@ export function getAllArticleCategories(): ArticleCategory[] {
 }
 
 export {
+  isCorporateDevouringMaArticle,
   isCounterfeitCuriosityArticle,
   isCounterfeitIntimacyArticle,
   isForgedAuthorityArticle,

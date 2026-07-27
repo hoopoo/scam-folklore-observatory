@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getArticleBySlug,
   getArticles,
+  isCorporateDevouringMaArticle,
   isCounterfeitCuriosityArticle,
   isCounterfeitIntimacyArticle,
   isForgedAuthorityArticle,
@@ -14,6 +15,7 @@ import { TrustedAiPersonaArticleDetail } from "@/components/articles/TrustedAiPe
 import { CounterfeitIntimacyArticleDetail } from "@/components/articles/CounterfeitIntimacyArticleDetail";
 import { CounterfeitCuriosityArticleDetail } from "@/components/articles/CounterfeitCuriosityArticleDetail";
 import { ForgedAuthorityArticleDetail } from "@/components/articles/ForgedAuthorityArticleDetail";
+import { CorporateDevouringArticleDetail } from "@/components/articles/CorporateDevouringArticleDetail";
 
 type Params = { slug: string };
 
@@ -74,6 +76,10 @@ export default async function ObservationArticlePage({
 
   if (!article) {
     notFound();
+  }
+
+  if (isCorporateDevouringMaArticle(article)) {
+    return <CorporateDevouringArticleDetail article={article} />;
   }
 
   if (isForgedAuthorityArticle(article)) {

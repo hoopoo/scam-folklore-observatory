@@ -128,6 +128,23 @@ body {
   }
 }
 
+@keyframes corporate-ownership-slide {
+  0%,
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  55%,
+  75% {
+    transform: translateX(72px);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .animate-article-in {
   animation: article-fade-up 0.7s ease both;
 }
@@ -149,12 +166,19 @@ body {
   animation: boundary-shift 10s ease infinite;
 }
 
+.corporate-ownership-slide {
+  animation: corporate-ownership-slide 14s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-article-in,
   .animate-hero-morph-a,
   .animate-hero-morph-b,
   .animate-memory-drift,
-  .animate-boundary-shift {
+  .animate-boundary-shift,
+  .corporate-ownership-slide {
     animation: none;
     opacity: 1;
     transform: none;

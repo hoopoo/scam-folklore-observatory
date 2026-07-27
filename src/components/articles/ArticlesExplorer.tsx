@@ -14,6 +14,7 @@ import { ArticleCardVisual } from "@/components/articles/TrustedAiPersonaHero";
 import { CounterfeitCardVisual } from "@/components/articles/CounterfeitIntimacyHero";
 import { CounterfeitCuriosityCardVisual } from "@/components/articles/CounterfeitCuriosityHero";
 import { ForgedAuthorityCardVisual } from "@/components/articles/ForgedAuthorityHero";
+import { CorporateDevouringCardVisual } from "@/components/articles/CorporateDevouringHero";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -23,7 +24,9 @@ function ArticleCard({ article }: { article: ScamFolkloreArticle }) {
   return (
     <Link href={`/scam-folklore/${article.slug}`} className="group">
       <Card className="flex h-full flex-col p-5 transition-colors hover:border-[var(--ink-faint)]">
-        {article.slug === "ai-forged-authority" ? (
+        {article.slug === "corporate-devouring-ma" ? (
+          <CorporateDevouringCardVisual />
+        ) : article.slug === "ai-forged-authority" ? (
           <ForgedAuthorityCardVisual />
         ) : article.slug === "counterfeit-curiosity-exits" ? (
           <CounterfeitCuriosityCardVisual />

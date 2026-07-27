@@ -9,7 +9,8 @@ export type ArticleTemplate =
   | "trusted-ai-persona"
   | "counterfeit-intimacy"
   | "counterfeit-curiosity-exits"
-  | "forged-authority";
+  | "forged-authority"
+  | "corporate-devouring-ma";
 
 export type ArticleCategory =
   | "Relationship Fraud"
@@ -28,7 +29,9 @@ export type ArticleCategory =
   | "Dark Patterns"
   | "AI Scam"
   | "Authority Fraud"
-  | "Corporate Scam";
+  | "Corporate Scam"
+  | "Institutional Scam"
+  | "Corporate Identity";
 
 export type ScamStackLayer = {
   layer: number;
@@ -592,12 +595,159 @@ export type ForgedAuthorityArticle = ArticleBase & {
   folkloreConnection: string;
 };
 
+export type ArticleSource = {
+  title: string;
+  publisher: string;
+  url: string | null;
+  status?: "available" | "url-required";
+};
+
+export type ObservationSummaryCard = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+export type MetaphorRow = {
+  element: string;
+  metaphor: string;
+};
+
+export type ObservationMatrixRow = {
+  dimension: string;
+  observation: string;
+};
+
+export type CorporateBodyPattern = {
+  patternName: string;
+  japaneseName: string;
+  description: string[];
+  sequence: string[];
+  quote: string[];
+};
+
+export type WarningSignalTier = {
+  id: string;
+  level: "High" | "Medium" | "Context";
+  title: string;
+  titleJa: string;
+  signs: string[];
+};
+
+export type ProtectionLayer = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export type CollapseStage = {
+  number: string;
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** 記事6: 会社は倒産する前に食べられる（corporate-devouring-ma テンプレート） */
+export type CorporateDevouringMaArticle = ArticleBase & {
+  template: "corporate-devouring-ma";
+  readingTime: string;
+  featured: boolean;
+  heroEyebrow: string;
+  heroLead: string[];
+  keyQuote: string[];
+  observationSummary: ObservationSummaryCard[];
+  section01: {
+    title: string;
+    paragraphs: string[];
+    pullQuote: string[];
+  };
+  section02: {
+    title: string;
+    paragraphs: string[];
+    highlight: { title: string; paragraphs: string[] };
+  };
+  section03: {
+    title: string;
+    intro: string[];
+    classicalItems: string[];
+    modernItems: string[];
+    bridge: string[];
+    keyDefinition: { title: string; body: string[] };
+  };
+  section04: {
+    title: string;
+    intro: string[];
+    bodyMetaphor: MetaphorRow[];
+    paragraphs: string[];
+    pullQuote: string[];
+  };
+  section05: {
+    title: string;
+    intro: string[];
+    affirmativeTerms: string[];
+    bridge: string[];
+    contrast: {
+      left: ComparisonColumn;
+      center: string;
+      right: ComparisonColumn;
+    };
+  };
+  section06: {
+    title: string;
+    paragraphs: string[];
+    tensions: string[];
+    questions: string[];
+    riskStatement: string[];
+  };
+  section07: {
+    title: string;
+    intro: string[];
+    checklists: ChecklistCategory[];
+  };
+  section08: {
+    title: string;
+    intro: string[];
+    trustAssets: string[];
+    bridge: string[];
+    largeQuote: string[];
+  };
+  section09: {
+    title: string;
+    intro: string;
+    tiers: WarningSignalTier[];
+    disclaimer: string;
+  };
+  section10: {
+    title: string;
+    rows: ServiceComparisonRow[];
+    closingQuote: string[];
+  };
+  section11: {
+    title: string;
+    stages: CollapseStage[];
+    emphasis: string[];
+  };
+  section12: {
+    title: string;
+    layers: ProtectionLayer[];
+  };
+  observationMatrix: ObservationMatrixRow[];
+  folklorePattern: CorporateBodyPattern;
+  protocolQuestions: string[];
+  relatedArticleSlugs: string[];
+  connectedObservatories: ConnectedObservatory[];
+  sources: ArticleSource[];
+  disclaimer: string;
+  folkloreConnection: string;
+};
+
 export type ScamFolkloreArticle =
   | ObservationArticle
   | TrustedAiPersonaArticle
   | CounterfeitIntimacyArticle
   | CounterfeitCuriosityArticle
-  | ForgedAuthorityArticle;
+  | ForgedAuthorityArticle
+  | CorporateDevouringMaArticle;
 
 export function isTrustedAiPersonaArticle(
   article: ScamFolkloreArticle,
@@ -627,4 +777,10 @@ export function isForgedAuthorityArticle(
   article: ScamFolkloreArticle,
 ): article is ForgedAuthorityArticle {
   return article.template === "forged-authority";
+}
+
+export function isCorporateDevouringMaArticle(
+  article: ScamFolkloreArticle,
+): article is CorporateDevouringMaArticle {
+  return article.template === "corporate-devouring-ma";
 }

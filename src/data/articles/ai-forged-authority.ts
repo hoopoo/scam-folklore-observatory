@@ -428,7 +428,8 @@ export const aiForgedAuthority: ForgedAuthorityArticle = {
       tagline: "身体は、本人を証明しなくなる",
       description:
         "声、顔、視線、口調が本人から分離され、生成可能なインターフェースになる。",
-      status: "coming-soon",
+      href: "https://body-meaning.shiroand.io/body-meaning/generated-body/body-no-longer-proves-the-person",
+      status: "available",
     },
     {
       id: "clean-society",
